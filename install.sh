@@ -37,3 +37,5 @@ source_dotfile "hushlogin" "~/.hushlogin"
 source_dotfile "rspec" "~/.rspec"
 source_dotfile "vrapperrc" "~/.vrapperrc"
 source_dotfile "pryrc" "~/.pryrc"
+
+exec zsh --login
