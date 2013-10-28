@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 install_zsh() {
   if ! [[ -e `which zsh` ]]; then
