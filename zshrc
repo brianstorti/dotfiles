@@ -1,9 +1,9 @@
 export ZSH=$HOME/.oh-my-zsh
-export ZSH_THEME="prose"
 export EDITOR="vim"
 
 plugins=(colorize brew)
 source $ZSH/oh-my-zsh.sh
+source ~/.prose.zsh-theme
 unsetopt correct_all
 
 alias z="vim ~/.zshrc"
