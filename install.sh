@@ -14,16 +14,18 @@ install_zsh() {
 
 install_oh_my_zsh() {
   install_zsh
-  curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+
+  if ! [[ -d ~/.oh-my-zsh ]]; then
+    curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+  fi
 }
 
 source_dotfile() {
   if [[ -e $2 ]]; then
     cp $2{,.bkp.$$};
-    rm $2;
   fi
 
-  ln -s `pwd`/$1 $2;
+  ln -sf `pwd`/$1 $2;
 }
 
 install_oh_my_zsh
@@ -37,5 +39,6 @@ source_dotfile "hushlogin" "~/.hushlogin"
 source_dotfile "rspec" "~/.rspec"
 source_dotfile "vrapperrc" "~/.vrapperrc"
 source_dotfile "pryrc" "~/.pryrc"
+source_dotfile "prose.zsh-theme" "~/.prose.zsh-theme"
 
 exec zsh --login
