@@ -1,0 +1,7 @@
+--follow
+--ignore-dir=log
+--ignore-dir=.metadata
+--ignore-dir=tmp
+--ignore-dir=public/assets
+--ignore-file=match:tags
+--ignore-file=match:gem.tags

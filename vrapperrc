@@ -1,0 +1,4 @@
+inoremap jk <esc>
+nnoremap gr gT
+nnoremap g_ $
+vnoremap g_ $
