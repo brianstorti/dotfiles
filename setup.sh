@@ -1,8 +1,8 @@
 #!/bin/bash
 
 install_zsh() {
-  if ! [[ -e `which zsh` ]]; then
-    if [[ `uname` == "Linux" ]]; then
+  if ! [ -e `which zsh` ]; then
+    if [ `uname` == "Linux" ]; then
       sudo apt-get update;
       sudo apt-get install zsh;
     else
@@ -15,13 +15,13 @@ install_zsh() {
 install_oh_my_zsh() {
   install_zsh
 
-  if ! [[ -d ~/.oh-my-zsh ]]; then
+  if ! [ -d ~/.oh-my-zsh ]; then
     curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
   fi
 }
 
 source_dotfile() {
-  if [[ -e $2 ]]; then
+  if [ -e $2 ]; then
     cp $2{,.bkp.$$};
   fi
 

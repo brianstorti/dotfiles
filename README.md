@@ -5,7 +5,7 @@ Run the following commands in your terminal. It will install oh-my-zsh, change y
 ```terminal
 git clone git://github.com/brianstorti/dotfiles ~/.dotfiles
 cd ~/.dotfiles
-sh install.sh
+sh setup.sh
 ```
 
 After installing, open a new terminal window to see the effects.
