@@ -2,7 +2,7 @@
 
 install_zsh() {
   if ! [ -e `which zsh` ]; then
-    if [ `uname` == "Linux" ]; then
+    if [ `uname` = "Linux" ]; then
       sudo apt-get update;
       sudo apt-get install zsh;
     else
