@@ -25,11 +25,12 @@ source_dotfiles() {
     rspec vrapperrc pryrc \
     prose.zsh-theme
   do
-    if [ -e $file ]; then
-      mv $file $file.bkp.$$
+    original_file=$HOME/.$file
+    if [ -e $original_file ]; then
+      mv $original_file $original_file.bkp.$$
     fi
 
-    ln -sf `pwd`/$file $HOME/.$file
+    ln -sf `pwd`/$file $original_file
   done
 }
 
