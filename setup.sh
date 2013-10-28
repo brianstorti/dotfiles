@@ -23,7 +23,7 @@ source_dotfiles() {
     zshrc gitconfig githelpers \
     gitignore ackrc hushlogin \
     rspec vrapperrc pryrc \
-    prose.zsh-theme
+    prose.zsh-theme tmux.conf
   do
     original_file=$HOME/.$file
     if [ -e $original_file ]; then
