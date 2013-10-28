@@ -1,14 +1,12 @@
 #!/bin/bash
 
 install_zsh() {
-  if ! [ -e `which zsh` ]; then
-    if [ `uname` = "Linux" ]; then
-      sudo apt-get update;
-      sudo apt-get install zsh;
-    else
-      brew update;
-      brew install zsh;
-    fi
+  if [ `uname` = "Linux" ]; then
+    sudo apt-get update;
+    sudo apt-get install zsh;
+  else
+    brew update;
+    brew install zsh;
   fi
 }
 
@@ -21,24 +19,21 @@ install_oh_my_zsh() {
 }
 
 source_dotfile() {
-  if [ -e $2 ]; then
-    cp $2{,.bkp.$$};
-  fi
+  for file in \
+    zshrc gitconfig githelpers \
+    gitignore ackrc hushlogin \
+    rspec vrapperrc pryrc \
+    prose.zsh-theme
+  do
+    if [ -e $file ]; then
+      mv $file $file.bkp.$$
+    fi
 
-  ln -sf `pwd`/$1 $2;
+    ln -sf `pwd`/$file $HOME/.$file
+  done
 }
 
 install_oh_my_zsh
-
-source_dotfile "zshrc" "~/.zshrc"
-source_dotfile "gitconfig" "~/.gitconfig"
-source_dotfile "githelpers" "~/.githelpers"
-source_dotfile "gitignore" "~/.gitignore"
-source_dotfile "ackrc" "~/.ackrc"
-source_dotfile "hushlogin" "~/.hushlogin"
-source_dotfile "rspec" "~/.rspec"
-source_dotfile "vrapperrc" "~/.vrapperrc"
-source_dotfile "pryrc" "~/.pryrc"
-source_dotfile "prose.zsh-theme" "~/.prose.zsh-theme"
+source_dotfiles
 
 exec zsh --login
