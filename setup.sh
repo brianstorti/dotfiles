@@ -37,4 +37,5 @@ source_dotfiles() {
 install_oh_my_zsh
 source_dotfiles
 
+chsh -s `which zsh`
 exec zsh --login
