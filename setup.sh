@@ -18,7 +18,7 @@ install_oh_my_zsh() {
   fi
 }
 
-source_dotfile() {
+source_dotfiles() {
   for file in \
     zshrc gitconfig githelpers \
     gitignore ackrc hushlogin \
