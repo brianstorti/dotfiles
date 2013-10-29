@@ -44,4 +44,6 @@
 [merge]
     tool = vimdiff
 [core]
-	excludesfile = /Users/brianstorti/.gitignore
+  excludesfile = /Users/brianstorti/.gitignore
+[init]
+	templatedir = ~/.git_template
