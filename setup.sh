@@ -5,7 +5,6 @@ install_zsh() {
     sudo apt-get update;
     sudo apt-get install zsh;
   else
-    brew update;
     brew install zsh;
   fi
 }
