@@ -1,6 +1,10 @@
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR="vim"
 
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 plugins=(colorize brew)
 source $ZSH/oh-my-zsh.sh
 source ~/.prose.zsh-theme
@@ -46,6 +50,9 @@ alias mysql_stop="mysql.server stop"
 
 # redis
 alias redis_start="redis-server /usr/local/etc/redis.conf"
+
+# memcache
+alias memcache_start="/usr/local/opt/memcached/bin/memcached"
 
 # use vim as man-page viewer
 man() {
