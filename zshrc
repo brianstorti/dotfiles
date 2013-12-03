@@ -21,6 +21,7 @@ alias va="vagrant"
 alias be="bundle exec"
 alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
+alias dbundle='ruby -I ~/bundler/lib ~/bundler/bin/bundle'
 
 # git
 alias g="git"
