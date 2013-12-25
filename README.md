@@ -8,4 +8,3 @@ sh setup.sh
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/brianstorti/dotfiles/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
