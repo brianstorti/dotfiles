@@ -46,4 +46,4 @@
 [core]
   excludesfile = /Users/brianstorti/.gitignore
 [init]
-	templatedir = ~/.git_template
+  templatedir = ~/.git_template
