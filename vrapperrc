@@ -2,3 +2,7 @@ inoremap jk <esc>
 nnoremap gr gT
 nnoremap g_ $
 vnoremap g_ $
+
+set ignorecase
+set hlsearch
+set incsearch
