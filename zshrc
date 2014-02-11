@@ -62,5 +62,15 @@ showp() {
   lsof -i tcp:$1
 }
 
+hr() {
+    line=''
+    cols=`tput cols`
+    while [[ ${#line} -lt cols ]]; do
+        line="$line*"
+    done
+
+    echo $line
+}
+
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
