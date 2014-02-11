@@ -63,13 +63,8 @@ showp() {
 }
 
 hr() {
-    line=''
-    cols=`tput cols`
-    while [[ ${#line} -lt cols ]]; do
-        line="$line*"
-    done
-
-    echo $line
+  line=$(printf "%-`tput cols`s" "*")
+  echo "${line// /*}"
 }
 
 export PATH="/usr/local/bin:$PATH"
