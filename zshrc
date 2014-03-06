@@ -53,19 +53,12 @@ alias redis_start="redis-server /usr/local/etc/redis.conf"
 # memcache
 alias memcache_start="/usr/local/opt/memcached/bin/memcached"
 
-# use vim as man-page viewer
-man() {
-  PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@
-}
-
-showp() {
-  lsof -i tcp:$1
-}
-
-hr() {
-  line=$(printf "%-`tput cols`s" "*")
-  echo "${line// /*}"
-}
+man()   { PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@ }
+showp() { lsof -i tcp:$1 }
+hr()    { line=$(printf "%-`tput cols`s" "*"); echo ${line// /*} }
+ff()    { find . -type f -iname "*$1*" }
+fd()    { find . -type d -iname "*$1*" }
+pa()    { ps aux | ag $1 }
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/heroku/bin:$PATH"
