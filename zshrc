@@ -18,6 +18,8 @@ source $ZSH/oh-my-zsh.sh
 source ~/.prose.zsh-theme
 unsetopt correct_all
 
+alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
+
 alias z="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
