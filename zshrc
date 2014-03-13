@@ -1,3 +1,11 @@
+# Fix to use tmux, rvm and zsh
+if [ -x /usr/libexec/path_helper ]
+then
+  eval `/usr/libexec/path_helper -s`
+fi
+
+export PATH="/usr/local/heroku/bin:/usr/local/bin:$PATH"
+
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR="vim"
 
@@ -59,6 +67,3 @@ hr()    { line=$(printf "%-`tput cols`s" "*"); echo ${line// /*} }
 ff()    { find . -type f -iname "*$1*" }
 fd()    { find . -type d -iname "*$1*" }
 pa()    { ps aux | ag $1 }
-
-export PATH="/usr/local/bin:$PATH"
-export PATH="/usr/local/heroku/bin:$PATH"
