@@ -68,4 +68,4 @@ showp() { lsof -i tcp:$1 }
 hr()    { line=$(printf "%-`tput cols`s" "*"); echo ${line// /*} }
 ff()    { find . -type f -iname "*$1*" }
 fd()    { find . -type d -iname "*$1*" }
-pa()    { ps aux | ag $1 }
+pa()    { ps aux | ag -i $1 }
