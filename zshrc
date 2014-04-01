@@ -48,6 +48,7 @@ alias gd="git diff"
 alias gr="git reflog"
 alias gdc="git diff --cached"
 alias gt="git tag"
+alias gm="git merge"
 
 # pg
 alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
