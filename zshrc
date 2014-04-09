@@ -31,6 +31,7 @@ alias va="vagrant"
 alias be="bundle exec"
 alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
+alias lr="lein run"
 
 # git
 alias g="git"
