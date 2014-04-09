@@ -32,6 +32,7 @@ alias be="bundle exec"
 alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
 alias lr="lein run"
+alias tmux="TERM=screen-256color-bce tmux"
 
 # git
 alias g="git"
