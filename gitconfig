@@ -47,3 +47,5 @@
   excludesfile = /Users/brianstorti/.gitignore
 [init]
   templatedir = ~/.git_template
+[push]
+  default = simple
