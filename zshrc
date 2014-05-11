@@ -17,9 +17,11 @@ plugins=(colorize brew)
 source $ZSH/oh-my-zsh.sh
 source ~/.prose.zsh-theme
 unsetopt correct_all
+export DISABLE_AUTO_UPDATE=true
 
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
 
+alias upgrade="brew update && brew upgrade && brew cleanup -s --force && upgrade_oh_my_zsh"
 alias z="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
@@ -33,10 +35,11 @@ alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
 alias lr="lein run"
 alias tmux="TERM=screen-256color-bce tmux"
+alias cc="echo '376411112222331' | pbcopy"
 
 # git
 alias g="git"
-alias ga="git add"
+alias ga="git add -A"
 alias gb="git branch"
 alias gs="git st"
 alias gl="git l -30"
@@ -90,3 +93,5 @@ fd() {
 pa() {
   ps aux | ag -i $1
 }
+
+[ -e ./zshrc-private ] && source ./zshrc-private
