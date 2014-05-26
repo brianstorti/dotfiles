@@ -94,4 +94,4 @@ pa() {
   ps aux | ag -i $1
 }
 
-[ -e ./zshrc-private ] && source ./zshrc-private
+[ -e ~/.zshrc-private ] && source ~/.zshrc-private
