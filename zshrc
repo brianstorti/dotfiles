@@ -94,4 +94,8 @@ pa() {
   ps aux | ag -i $1
 }
 
+svndiff() {
+  svn diff $@ | colordiff | less
+}
+
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
