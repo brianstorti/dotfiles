@@ -1,0 +1,14 @@
+inoremap jk <esc>
+nnoremap gr gT
+nnoremap g_ $
+vnoremap g_ $
+
+set ignorecase
+set hlsearch
+set incsearch
+set tabstop=2
+
+map <Left> <nop>
+map <Right> <nop>
+map <Up> <nop>
+map <Down> <nop>
