@@ -5,6 +5,7 @@ then
 fi
 
 export PATH="/usr/local/heroku/bin:/usr/local/bin:$PATH"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR="vim"
@@ -22,7 +23,7 @@ export DISABLE_AUTO_UPDATE=true
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
 
 alias upgrade="brew update && brew upgrade && brew cleanup -s --force && upgrade_oh_my_zsh"
-alias z="vim ~/.zshrc"
+alias ez="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
 alias reload="exec $SHELL --login"
@@ -99,3 +100,4 @@ svndiff() {
 }
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
+[ -e ~/.z.sh ] && source ~/.z.sh
