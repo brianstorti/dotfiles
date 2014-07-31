@@ -6,6 +6,7 @@ fi
 
 export PATH="/usr/local/heroku/bin:/usr/local/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
 
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR="vim"
@@ -36,7 +37,7 @@ alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
 alias lr="lein run"
 alias tmux="TERM=screen-256color-bce tmux"
-alias cc="echo '376411112222331' | pbcopy"
+alias todo="vim ~/.todo"
 
 # git
 alias g="git"
@@ -97,6 +98,14 @@ pa() {
 
 svndiff() {
   svn diff $@ | colordiff | less
+}
+
+java6() {
+  export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
+}
+
+java7() {
+  export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home"
 }
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
