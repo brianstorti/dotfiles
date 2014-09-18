@@ -110,3 +110,4 @@ java7() {
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
+[ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
