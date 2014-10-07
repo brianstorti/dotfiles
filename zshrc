@@ -96,10 +96,6 @@ pa() {
   ps aux | ag -i $1
 }
 
-svndiff() {
-  svn diff $@ | colordiff | less
-}
-
 java6() {
   export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
 }
@@ -111,3 +107,4 @@ java7() {
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -e ~/.svnhelpers ] && source ~/.svnhelpers

@@ -26,7 +26,8 @@ source_dotfiles() {
     gitignore ackrc hushlogin \
     rspec vrapperrc pryrc \
     prose.zsh-theme tmux.conf \
-    git-template ideavimrc
+    git-template ideavimrc \
+    svnhelpers
   do
     original_file=$HOME/.$file
     if [ -e $original_file ]; then
