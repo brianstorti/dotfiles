@@ -27,7 +27,7 @@ source_dotfiles() {
     rspec vrapperrc pryrc \
     prose.zsh-theme tmux.conf \
     git-template ideavimrc \
-    svnhelpers
+    svnhelpers agignore
   do
     original_file=$HOME/.$file
     if [ -e $original_file ]; then
@@ -42,7 +42,7 @@ source_dotfiles() {
 install_oh_my_zsh
 source_dotfiles
 
-echo "defininf zsh as the default shell"
+echo "defining zsh as the default shell"
 chsh -s `which zsh`
 
 echo "done!"

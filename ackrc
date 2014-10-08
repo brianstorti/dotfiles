@@ -2,6 +2,7 @@
 --ignore-dir=log
 --ignore-dir=.metadata
 --ignore-dir=tmp
+--ignore-dir=node_modules
 --ignore-dir=public/assets
 --ignore-file=match:tags
 --ignore-file=match:gem.tags
