@@ -1,12 +1,6 @@
 #!/bin/bash
 
-alias svn-whatchanged="svn log -v | less"
-
-function svndiff() {
-  svn diff $@ | colordiff | less
-}
-
-function svn {
+function svn() {
   command svn "$@" | awk '
   BEGIN {
     cpt_c=0;
@@ -34,10 +28,22 @@ function svn {
   }';
 }
 
-function svn-show {
+function svn-whatchanged() {
+  svn log -v | less
+}
+
+function svn-diff() {
+  svn diff $@ | colordiff | less
+}
+
+function svn-show() {
   svndiff -c $1
 }
 
-function svn-log {
+function svn-log() {
   svn log | less
+}
+
+function svn-authors() {
+  svn log -v --xml | grep '<author.*/author>' | sort $* | uniq -c | sort -rn | sed -e "s/\<author\>//g" | sed -e "s/\<\/author\>//g"
 }
