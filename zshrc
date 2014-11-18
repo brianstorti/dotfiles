@@ -104,6 +104,13 @@ java7() {
   export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home"
 }
 
+ip() {
+  ifconfig -a        |
+  grep 'inet '       |
+  grep broadcast     |
+  awk '{ print $2 }'
+}
+
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
