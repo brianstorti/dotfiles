@@ -37,7 +37,7 @@ function svn-diff() {
 }
 
 function svn-show() {
-  svndiff -c $1
+  svn-diff -c $1
 }
 
 function svn-log() {
