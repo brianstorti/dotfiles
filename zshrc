@@ -105,10 +105,7 @@ java7() {
 }
 
 ip() {
-  ifconfig -a        |
-  grep 'inet '       |
-  grep broadcast     |
-  awk '{ print $2 }'
+  ifconfig -a | grep inet | grep broadcast | awk '{ print $2 }'
 }
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
