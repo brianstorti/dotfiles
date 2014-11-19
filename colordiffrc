@@ -1,0 +1,14 @@
+# Available colors:
+#
+# white, yellow, green, blue, cyan, red, magenta, black,
+# darkwhite, darkyellow, darkgreen, darkblue, darkcyan,
+# darkred, darkmagenta and darkblack.
+#
+# 'off' can be used to make colordiff use the default
+# output color.
+
+newtext=green
+diffstuff=darkwhite
+
+# File name
+cvsstuff=yellow
