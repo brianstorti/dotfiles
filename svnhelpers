@@ -1,7 +1,7 @@
 #!/bin/bash
 
-function svn() {
-  command svn "$@" | awk '
+function add_file_status_color() {
+  awk '
   BEGIN {
     cpt_c=0;
   }
@@ -28,22 +28,42 @@ function svn() {
   }';
 }
 
-function svn-whatchanged() {
-  svn log -v | less
+function svn_whatchanged() {
+  command svn log -v | add_file_status_color | less
 }
 
-function svn-diff() {
-  svn diff $@ | colordiff | less
+function svn_diff() {
+  command svn diff $@ | colordiff | less
 }
 
-function svn-show() {
-  svn-diff -c $1
+function svn_show() {
+  svn_diff -c $1
 }
 
-function svn-log() {
-  svn log | less
+function svn_log() {
+  command svn log | less
 }
 
-function svn-authors() {
-  svn log -v --xml | grep '<author.*/author>' | sort $* | uniq -c | sort -rn | sed -e "s/\<author\>//g" | sed -e "s/\<\/author\>//g"
+function svn_st() {
+  command svn st | add_file_status_color
+}
+
+function svn_authors() {
+  command svn log -v --xml |
+    grep '<author.*/author>' |
+    sort $* |
+    uniq -c |
+    sort -rn |
+    sed -e "s/\<author\>//g" |
+    sed -e "s/\<\/author\>//g"
+}
+
+function svn() {
+  cmd=$1;
+  if type "svn_"$cmd > /dev/null 2>&1; then
+    shift
+    "svn_"$cmd $@
+  else
+    command svn $@
+  fi
 }
