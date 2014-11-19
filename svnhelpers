@@ -2,29 +2,22 @@
 
 function add_file_status_color() {
   awk '
-  BEGIN {
-    cpt_c=0;
-  }
   {
-    if        ($1=="C") {
-      cpt_c=cpt_c+1;
+    if ($1=="C") {
       print "\033[35m" $0 "\033[00m";  # Conflicts
     }
-    else if   ($1=="A") {
+    else if ($1=="A") {
       print "\033[32m" $0 "\033[00m";  # Add in green
     }
-    else if   ($1=="?") {
+    else if ($1=="?") {
       print "\033[36m" $0 "\033[00m";  # New in cyan
     }
-    else if   ($1=="D") {
+    else if ($1=="D") {
       print "\033[31m" $0 "\033[00m";  # Deletes
     }
-    else                {
+    else {
       print $0;                        # No color, just print the line
     }
-  }
-  END {
-    print cpt_c, " conflicts are found.";
   }';
 }
 
