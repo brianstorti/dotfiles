@@ -4,19 +4,19 @@ function add_file_status_color() {
   awk '
   {
     if ($1=="C") {
-      print "\033[35m" $0 "\033[00m";  # Conflicts
+      print "\033[35m" $0 "\033[00m";
     }
     else if ($1=="A") {
-      print "\033[32m" $0 "\033[00m";  # Add in green
+      print "\033[32m" $0 "\033[00m";
     }
     else if ($1=="?") {
-      print "\033[36m" $0 "\033[00m";  # New in cyan
+      print "\033[36m" $0 "\033[00m";
     }
     else if ($1=="D") {
-      print "\033[31m" $0 "\033[00m";  # Deletes
+      print "\033[31m" $0 "\033[00m";
     }
     else {
-      print $0;                        # No color, just print the line
+      print $0;
     }
   }';
 }
