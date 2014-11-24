@@ -38,7 +38,11 @@ function svn_log() {
 }
 
 function svn_st() {
-  command svn st | add_file_status_color
+  command svn st $@ | add_file_status_color
+}
+
+function svn_up() {
+  command svn up $@ | add_file_status_color
 }
 
 function svn_authors() {
