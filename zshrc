@@ -19,9 +19,9 @@ plugins=(colorize brew)
 source $ZSH/oh-my-zsh.sh
 source ~/.prose.zsh-theme
 unsetopt correct_all
-export DISABLE_AUTO_UPDATE=true
 
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
+alias gbrian="open -a Google\ Chrome 'http://github.com/brianstorti'"
 
 alias upgrade="brew update && brew upgrade && brew cleanup -s --force && upgrade_oh_my_zsh"
 alias ez="vim ~/.zshrc"
@@ -77,6 +77,18 @@ man() {
 
 showp() {
   lsof -i tcp:$1
+}
+
+# kills every process running on a given port
+killp() {
+  OLD_IFS=$IFS;
+
+  lsof -i :$1 | grep TCP | while IFS= read -r line ; do
+    kill -9 `echo $line | awk '{ print $2 }'`;
+    echo `echo $line | awk '{ print $1 }'`" killed";
+  done
+
+  IFS=$OLD_IFS;
 }
 
 hr() {
