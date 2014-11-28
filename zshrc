@@ -9,6 +9,8 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
 
 export ZSH=$HOME/.oh-my-zsh
+[ -e $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh && source ~/.prose.zsh-theme
+
 export EDITOR="vim"
 
 export LANG=en_US.UTF-8
@@ -16,8 +18,6 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 plugins=(colorize brew)
-source $ZSH/oh-my-zsh.sh
-source ~/.prose.zsh-theme
 unsetopt correct_all
 
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
