@@ -103,7 +103,9 @@ ff() {
 }
 
 fd() {
-  find . -type d -iname "*$1*"
+  name=$1
+  shift
+  find . -type d -iname "*$name*" $@
 }
 
 pa() {

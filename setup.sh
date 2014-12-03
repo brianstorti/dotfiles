@@ -68,14 +68,7 @@ install_oh_my_zsh() {
 source_dotfiles() {
   print_message "\nSourcing dotfiles."
 
-  for file in \
-    zshrc gitconfig githelpers \
-    gitignore ackrc hushlogin \
-    rspec vrapperrc pryrc \
-    prose.zsh-theme tmux.conf \
-    git-template ideavimrc \
-    svnhelpers agignore \
-    colordiffrc
+  for file in `ls -1 files`
   do
     original_file=$HOME/.$file
     if [ -e $original_file ]; then
@@ -84,7 +77,7 @@ source_dotfiles() {
     fi
 
     print_message "Copying $file"
-    ln -sf `pwd`/$file $original_file
+    ln -sf `pwd`/files/$file $original_file
   done
 }
 
