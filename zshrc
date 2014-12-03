@@ -97,7 +97,9 @@ hr() {
 }
 
 ff() {
-  find . -type f -iname "*$1*"
+  name=$1
+  shift
+  find . -type f -iname "*$name*" $@
 }
 
 fd() {
