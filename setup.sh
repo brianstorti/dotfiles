@@ -24,7 +24,7 @@ install_zsh() {
   print_message "\nChecking if zsh is already installed."
 
   if type zsh > /dev/null 2>&1; then
-    print_message "zsh found at '`which zsh`', moving on."
+    print_warning "zsh found at '`which zsh`', moving on."
     return
   fi
 
@@ -81,16 +81,18 @@ source_dotfiles() {
   done
 }
 
-set_zsh_as_default() {
-  print_message "\nDefining zsh as the default shell."
-  chsh -s `which zsh`
-  export SHELL=`which zsh`
+set_zsh_as_default_shell() {
+  if [ $SHELL != `which zsh` ]; then
+    print_message "\nDefining zsh as the default shell."
+    chsh -s `which zsh`
+    export SHELL=`which zsh`
+  fi
 }
 
 install_zsh
 install_oh_my_zsh
 source_dotfiles
-set_zsh_as_default
+set_zsh_as_default_shell
 
 print_message "Done!"
 exec zsh --login
