@@ -68,7 +68,7 @@ install_oh_my_zsh() {
 source_dotfiles() {
   print_message "\nSourcing dotfiles."
 
-  for file in `ls -1 files`
+  for file in `ls files`
   do
     original_file=$HOME/.$file
     if [ -e $original_file ]; then
