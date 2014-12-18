@@ -13,7 +13,11 @@ export ZSH=$HOME/.oh-my-zsh
 [ -e $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh && source ~/.prose.zsh-theme
 
 # Use ^U to delete everything to the left
-bindkey \^U backward-kill-line
+bindkey '^U' backward-kill-line
+
+# Use ^N to suspend current command, and then, after another command is executed,
+# it is copied back to the prompt
+bindkey '^N' push-line
 unsetopt correct_all
 
 export EDITOR="vim"
