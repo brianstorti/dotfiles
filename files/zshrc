@@ -103,15 +103,22 @@ hr() {
 }
 
 ff() {
-  name=$1
-  shift
-  find . -type f -iname "*$name*" $@
+  find_type "f" $@
+}
+
+fl() {
+  find_type "l" $@
 }
 
 fd() {
-  name=$1
-  shift
-  find . -type d -iname "*$name*" $@
+  find_type "d" $@
+}
+
+find_type() {
+  search_type=$1
+  name=$2
+  shift 2
+  find . -type $search_type -iname "*$name*" $@
 }
 
 pa() {
