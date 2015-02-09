@@ -6,3 +6,13 @@
 --ignore-dir=public/assets
 --ignore-file=match:tags
 --ignore-file=match:gem.tags
+--smart-case
+
+--type-add
+ruby=haml,rabl,builder
+
+--type-add
+js=json,tmpl,jst,coffee
+
+--type-add
+css=sass,scss
