@@ -2,3 +2,6 @@ log
 .metadata
 tmp
 node_modules
+generated
+concat
+_bower
