@@ -137,6 +137,12 @@ ip() {
   ifconfig -a | grep inet | grep broadcast | awk '{ print $2 }'
 }
 
+dash() {
+  docset=$1
+  query=$2
+  open dash://$docset:$query
+}
+
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
