@@ -45,6 +45,10 @@ function svn_up() {
   command svn up $@ | add_file_status_color
 }
 
+function svn_revert-rev() {
+  command svn diff -c $@ . | patch -R -p0
+}
+
 function svn_authors() {
   command svn log -v --xml |
     grep '<author.*/author>' |
