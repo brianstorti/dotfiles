@@ -137,6 +137,10 @@ ip() {
   ifconfig -a | grep inet | grep broadcast | awk '{ print $2 }'
 }
 
+size() {
+  du -sh $@
+}
+
 dash() {
   docset=$1
   query=$2
