@@ -49,6 +49,40 @@ function svn_revert-rev() {
   command svn diff -c $@ . | patch -R -p0
 }
 
+function svn_stash() {
+  local files=$@
+  if [ -z $files ]; then
+    files="."
+  fi
+
+  diff=`command svn diff $files`
+  if [ -z $diff ]; then
+    echo 'There are not changes to be stashed'
+    return
+  fi
+
+  mkdir -p .tmp
+  local stash_file=stash-`date | tr ' ' '_'`
+  echo $diff > .tmp/$stash_file
+  svn revert -R $files
+}
+
+function svn_pop() {
+  # TODO: find better way to get last modified file
+  local last_stash=""
+  for file in `ls -tr .tmp`; do
+    last_stash=$file;
+  done
+
+  if [ -e $last_stash ]; then
+    echo 'There is nothing stashed (check .tmp/ for stash files)'
+    return
+  fi
+
+  last_stash=.tmp/$last_stash
+  command svn patch $last_stash && rm $last_stash
+}
+
 function svn_authors() {
   command svn log -v --xml |
     grep '<author.*/author>' |
