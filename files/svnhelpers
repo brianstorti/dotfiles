@@ -57,29 +57,29 @@ function svn_stash() {
 
   diff=`command svn diff $files`
   if [ -z $diff ]; then
-    echo 'There are not changes to be stashed'
+    echo 'There are no changes to be stashed'
     return
   fi
 
-  mkdir -p .tmp
+  mkdir -p .svn/stash
   local stash_file=stash-`date | tr ' ' '_'`
-  echo $diff > .tmp/$stash_file
+  echo $diff > .svn/stash/$stash_file
   svn revert -R $files
 }
 
 function svn_pop() {
   # TODO: find better way to get last modified file
   local last_stash=""
-  for file in `ls -tr .tmp`; do
+  for file in `ls -tr .svn/stash`; do
     last_stash=$file;
   done
 
   if [ -e $last_stash ]; then
-    echo 'There is nothing stashed (check .tmp/ for stash files)'
+    echo 'There is nothing stashed (check .svn/stash for stash files)'
     return
   fi
 
-  last_stash=.tmp/$last_stash
+  last_stash=.svn/stash/$last_stash
   command svn patch $last_stash && rm $last_stash
 }
 
