@@ -50,34 +50,25 @@ function svn_revert-rev() {
 }
 
 function svn_stash() {
+  mkdir -p .svn/stash
+  [ ! -z $1 ] && [ $1 = "list" ] && ls -1 .svn/stash && return
+  [ ! -z $1 ] && [ $1 = "pop" ] && svn_pop && return
+
   local files=$@
-  if [ -z $files ]; then
-    files="."
-  fi
+  [ -z $files ] && files="."
 
   diff=`command svn diff $files`
-  if [ -z $diff ]; then
-    echo 'There are no changes to be stashed'
-    return
-  fi
+  [ -z $diff ] && echo 'There are no changes to be stashed' && return
 
-  mkdir -p .svn/stash
   local stash_file=stash-`date | tr ' ' '_'`
   echo $diff > .svn/stash/$stash_file
   svn revert -R $files
 }
 
 function svn_pop() {
-  # TODO: find better way to get last modified file
-  local last_stash=""
-  for file in `ls -tr .svn/stash`; do
-    last_stash=$file;
-  done
+  local last_stash=`ls -1t .svn/stash | head -1`
 
-  if [ -e $last_stash ]; then
-    echo 'There is nothing stashed (check .svn/stash for stash files)'
-    return
-  fi
+  [ -e $last_stash ] && echo 'There is nothing stashed (check .svn/stash for stash files)' && return
 
   last_stash=.svn/stash/$last_stash
   command svn patch $last_stash && rm $last_stash
