@@ -51,7 +51,7 @@ function svn_revert-rev() {
 
 function svn_stash() {
   mkdir -p .svn/stash
-  [ ! -z $1 ] && [ $1 = "list" ] && ls -1 .svn/stash && return
+  [ ! -z $1 ] && [ $1 = "list" ] && ls -1t .svn/stash && return
   [ ! -z $1 ] && [ $1 = "pop" ] && svn_pop && return
 
   local files=$@
