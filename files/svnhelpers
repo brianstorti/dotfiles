@@ -57,7 +57,7 @@ function svn_stash() {
       ls -1t .svn/stash
       return
       ;;
-    "view")
+    "show")
       cat .svn/stash/$2 | colordiff
       return
       ;;
