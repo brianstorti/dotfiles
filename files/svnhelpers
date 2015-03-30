@@ -51,8 +51,22 @@ function svn_revert-rev() {
 
 function svn_stash() {
   mkdir -p .svn/stash
-  [ ! -z $1 ] && [ $1 = "list" ] && ls -1t .svn/stash && return
-  [ ! -z $1 ] && [ $1 = "pop" ] && svn_pop && return
+
+  case $1 in
+    "list")
+      ls -1t .svn/stash
+      return
+      ;;
+    "view")
+      cat .svn/stash/$2 | colordiff
+      return
+      ;;
+    "pop")
+      shift
+      svn_pop $@
+      return
+      ;;
+  esac
 
   local files=$@
   [ -z $files ] && files="."
