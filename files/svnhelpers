@@ -60,18 +60,29 @@ function svn_stash() {
   diff=`command svn diff $files`
   [ -z $diff ] && echo 'There are no changes to be stashed' && return
 
-  local stash_file=stash-`date | tr ' ' '_'`
+  local stash_file=stash_`date | tr ' ' '_' | tr ':' '_'`
   echo $diff > .svn/stash/$stash_file
   svn revert -R $files
 }
 
 function svn_pop() {
-  local last_stash=`ls -1t .svn/stash | head -1`
+  local stash_file=""
 
-  [ -e $last_stash ] && echo 'There is nothing stashed (check .svn/stash for stash files)' && return
+  if [ ! -z $1 ]; then
+    if [ -e .svn/stash/$1 ]; then
+      stash_file=$1
+    else
+      echo "Not a valid stash file (check .svn/stash)"
+      return
+    fi
+  else
+    stash_file=`ls -1t .svn/stash | head -1`
+  fi
 
-  last_stash=.svn/stash/$last_stash
-  command svn patch $last_stash && rm $last_stash
+  [ -z $stash_file ] && echo 'There is nothing stashed (check .svn/stash for stash files)' && return
+
+  stash_file=.svn/stash/$stash_file
+  command svn patch $stash_file && rm $stash_file
 }
 
 function svn_authors() {
