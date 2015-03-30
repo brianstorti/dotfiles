@@ -68,7 +68,7 @@ function svn_stash() {
       ;;
   esac
 
-  local files=$@
+  files=$@
   [ -z $files ] && files="."
 
   diff=`command svn diff $files`
