@@ -76,6 +76,8 @@ function svn_stash() {
 
   local stash_file=stash_`date | tr ' ' '_' | tr ':' '_'`
   echo $diff > .svn/stash/$stash_file
+
+  for file in `svn status | grep "^A" | awk '{ print $2 }'`; do rm -R $file; done
   svn revert -R $files
 }
 
