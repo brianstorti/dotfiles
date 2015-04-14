@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function add_diff_color() {
+  if type colordiff > /dev/null 2>&1; then
+    colordiff $@
+  else
+    tee $@
+  fi
+}
+
 function add_file_status_color() {
   awk '
   {
@@ -22,11 +30,11 @@ function add_file_status_color() {
 }
 
 function svn_whatchanged() {
-  command svn log -v | add_file_status_color | less
+  command svn log -v | add_file_status_color | less -R
 }
 
 function svn_diff() {
-  command svn diff $@ | colordiff | less
+  command svn diff $@ | add_diff_color | less -R
 }
 
 function svn_show() {
@@ -34,7 +42,7 @@ function svn_show() {
 }
 
 function svn_log() {
-  command svn log | less
+  command svn log | less -R
 }
 
 function svn_st() {
@@ -58,7 +66,7 @@ function svn_stash() {
       return
       ;;
     "show")
-      cat .svn/stash/$2 | colordiff | less
+      cat .svn/stash/$2 | add_diff_color | less -R
       return
       ;;
     "pop")
