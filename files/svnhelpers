@@ -59,6 +59,7 @@ function svn_revert-rev() {
 
 function svn_stash() {
   mkdir -p .svn/stash
+  local stash_file=stash_`date | tr ' ' '_' | tr ':' '_'`
 
   case $1 in
     "list")
@@ -66,13 +67,18 @@ function svn_stash() {
       return
       ;;
     "show")
-      cat .svn/stash/$2 | add_diff_color | less -R
+      file_to_show=${2-`ls -1t .svn/stash/ | head -1`}
+      cat .svn/stash/$file_to_show | add_diff_color | less -R
       return
       ;;
     "pop")
       shift
       svn_pop $@
       return
+      ;;
+    "--alias")
+      stash_file=$2
+      shift 2
       ;;
   esac
 
@@ -82,9 +88,9 @@ function svn_stash() {
   diff=`command svn diff $files`
   [ -z $diff ] && echo 'There are no changes to be stashed' && return
 
-  local stash_file=stash_`date | tr ' ' '_' | tr ':' '_'`
   echo $diff > .svn/stash/$stash_file
 
+  # should do this just for files matcginf $files
   for file in `svn status | grep "^A" | awk '{ print $2 }'`; do rm -R $file; done
   svn revert -R $files
 }
