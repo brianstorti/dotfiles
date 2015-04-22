@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 print_message() {
   echo -e "\033[1;32m"$1"\033[00m";
