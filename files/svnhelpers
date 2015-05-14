@@ -33,6 +33,10 @@ function svn_whatchanged() {
   command svn log -v | add_file_status_color | less -R
 }
 
+function svn_cat() {
+  command svn cat -r $1 $2 | less -R
+}
+
 function svn_diff() {
   command svn diff $@ | add_diff_color | less -R
 }
@@ -42,7 +46,7 @@ function svn_show() {
 }
 
 function svn_log() {
-  command svn log | less -R
+  command svn log $@ | less -R
 }
 
 function svn_st() {
