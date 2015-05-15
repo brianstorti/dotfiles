@@ -81,6 +81,11 @@ man() {
   PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@
 }
 
+cale() {
+  year=$(date | awk '{print $6}')
+  cal $1 $year
+}
+
 showp() {
   lsof -i tcp:$1
 }
