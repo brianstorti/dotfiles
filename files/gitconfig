@@ -11,10 +11,16 @@
 [merge]
   tool = vimdiff
 [core]
-  excludesfile = /Users/brianstorti/.gitignore
+  excludesfile = /opt/boxen/config/git/gitignore
 [init]
   templatedir = ~/.git_template
 [push]
-  default = matching
+  default = tracking
 [rerere]
-	enabled = 1
+  enabled = 1
+
+[hub]
+protocol = https
+
+[credential]
+helper = /opt/boxen/bin/boxen-git-credential
