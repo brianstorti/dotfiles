@@ -96,3 +96,6 @@ set_zsh_as_default_shell
 
 print_message "Done!"
 exec zsh --login
+
+# Make ruby work in vim
+sudo mv /etc/zshenv /etc/zshenv.bak
