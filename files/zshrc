@@ -4,6 +4,7 @@ then
   eval `/usr/libexec/path_helper -s`
 fi
 
+export TERM=screen-256color-bce
 export PATH="/usr/local/heroku/bin:/usr/local/bin:$PATH"
 export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 
@@ -41,11 +42,11 @@ alias be="bundle exec"
 alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
 alias lr="lein run"
-alias tmux="TERM=screen-256color-bce tmux"
 alias todo="vim ~/Dropbox/.todo"
 alias imix="iex -S mix"
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
+alias t="tmux"
 
 # git
 alias g="git"
