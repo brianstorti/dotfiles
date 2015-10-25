@@ -29,7 +29,6 @@ export LC_ALL=en_US.UTF-8
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
 alias gbrian="open -a Google\ Chrome 'http://github.com/brianstorti'"
 
-alias upgrade="brew update && brew upgrade && brew cleanup -s --force && upgrade_oh_my_zsh"
 alias ez="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
