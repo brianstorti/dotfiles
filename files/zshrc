@@ -10,7 +10,6 @@ export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Ho
 
 export ZSH=$HOME/.oh-my-zsh
 [ -e $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh && source ~/.prose.zsh-theme
-export RPROMPT=$'%F{cyan}%*%f'
 
 # Use ^U to delete everything to the left
 bindkey '^U' backward-kill-line
@@ -46,6 +45,7 @@ alias imix="iex -S mix"
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
 alias t="tmux"
+alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
 
 # git
 alias g="git"
@@ -172,3 +172,6 @@ loop() {
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -e ~/.svnhelpers ] && source ~/.svnhelpers
 source /opt/boxen/env.sh
+
+export NVM_DIR="/Users/brianstorti/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
