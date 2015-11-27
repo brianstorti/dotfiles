@@ -47,6 +47,16 @@ alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_
 alias t="tmux"
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
 
+s() {
+  if [ -f mix.exs ]; then
+    echo "mix phoenix.server"
+    mix phoenix.server
+  else
+    echo "rails server -b 0.0.0.0"
+    rails server -b 0.0.0.0
+  fi
+}
+
 # git
 alias g="git"
 alias ga="git add -A"
