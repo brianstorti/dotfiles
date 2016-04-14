@@ -14,9 +14,6 @@ export ZSH=$HOME/.oh-my-zsh
 # Use ^U to delete everything to the left
 bindkey '^U' backward-kill-line
 
-# Use ^N to suspend current command, and then, after another command is executed,
-# it is copied back to the prompt
-bindkey '^N' push-line
 unsetopt correct_all
 
 export EDITOR="vim"
