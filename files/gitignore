@@ -4,3 +4,4 @@ tags
 nohup.out
 .nrepl-port
 Session.vim
+.ruby-version
