@@ -43,16 +43,8 @@ alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resour
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
 alias t="tmux"
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
-
-s() {
-  if [ -f mix.exs ]; then
-    echo "mix phoenix.server"
-    mix phoenix.server
-  else
-    echo "rails server -b 0.0.0.0"
-    rails server -b 0.0.0.0
-  fi
-}
+alias reset_rabbit="rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
+alias ss="spring stop"
 
 # git
 alias g="git"
@@ -109,6 +101,16 @@ killp() {
   done
 
   IFS=$OLD_IFS;
+}
+
+s() {
+  if [ -f mix.exs ]; then
+    echo "mix phoenix.server $@"
+    mix phoenix.server $@
+  else
+    echo "rails server -b 0.0.0.0 $@"
+    rails server -b 0.0.0.0 $@
+  fi
 }
 
 hr() {
