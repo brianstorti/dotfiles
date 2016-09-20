@@ -8,7 +8,7 @@
   diff = auto
 [alias]
   l = "!source ~/.githelpers && pretty_git_log"
-  pr = "pull-request"
+  pr = "pull-request -o"
 [merge]
   tool = vimdiff
 [core]
@@ -16,7 +16,7 @@
 [init]
   templatedir = ~/.git_template
 [push]
-  default = tracking
+	default = current
 [rerere]
   enabled = 1
 
