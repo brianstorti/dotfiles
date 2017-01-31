@@ -9,6 +9,7 @@
 [alias]
   l = "!source ~/.githelpers && pretty_git_log"
   pr = "pull-request -o"
+  co = "checkout"
 [merge]
   tool = vimdiff
 [core]
@@ -16,7 +17,7 @@
 [init]
   templatedir = ~/.git_template
 [push]
-	default = current
+  default = current
 [rerere]
   enabled = 1
 
