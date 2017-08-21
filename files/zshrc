@@ -184,12 +184,15 @@ loop() {
   while [ true ]; do; $@; done;
 }
 
+load_nvm() {
+  export NVM_DIR="/Users/brianstorti/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+}
+
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -e ~/.svnhelpers ] && source ~/.svnhelpers
- source /opt/boxen/env.sh
+source /opt/boxen/env.sh
 
-export NVM_DIR="/Users/brianstorti/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 eval "$(direnv hook zsh)"
