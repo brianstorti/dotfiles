@@ -10,6 +10,7 @@
   l = "!source ~/.githelpers && pretty_git_log"
   pr = "pull-request -o"
   co = "checkout"
+  showfiles = "diff-tree --no-commit-id --name-only -r"
 [merge]
   tool = vimdiff
 [core]
