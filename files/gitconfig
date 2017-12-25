@@ -8,13 +8,12 @@
   diff = auto
 [alias]
   l = "!source ~/.githelpers && pretty_git_log"
-  pr = "pull-request -o"
   co = "checkout"
   showfiles = "diff-tree --no-commit-id --name-only -r"
 [merge]
   tool = vimdiff
 [core]
-  excludesfile = /opt/boxen/config/git/gitignore
+  excludesfile = ~/.gitignore
 [init]
   templatedir = ~/.git_template
 [push]
@@ -25,8 +24,6 @@
 [hub]
 protocol = https
 
-[credential]
-helper = /opt/boxen/bin/boxen-git-credential
 [pager]
   diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
