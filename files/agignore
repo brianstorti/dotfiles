@@ -6,3 +6,4 @@ generated
 concat
 _bower
 test_out
+/.git/
