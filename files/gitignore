@@ -5,3 +5,4 @@ nohup.out
 .nrepl-port
 Session.vim
 .ruby-version
+.tool-versions
