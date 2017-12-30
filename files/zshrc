@@ -42,7 +42,8 @@ alias vi="vim"
 alias reload="exec $SHELL --login"
 alias e="exit"
 alias :q="exit"
-alias r="rails"
+alias r="bin/rails"
+alias t="bin/rails test"
 alias va="vagrant"
 alias be="bundle exec"
 alias eh="sudo vim /etc/hosts"
@@ -52,7 +53,6 @@ alias todo="vim ~/Dropbox/.todo"
 alias imix="iex -S mix"
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
-alias t="tmux"
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
 alias reset_rabbit="rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
 alias ss="spring stop"
@@ -212,3 +212,9 @@ eval "$(direnv hook zsh)"
 
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/sbin/google-cloud-sdk/path.zsh.inc' ]; then source '/usr/local/sbin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc'; fi
