@@ -6,3 +6,4 @@ nohup.out
 Session.vim
 .ruby-version
 .tool-versions
+.docker-sync/
