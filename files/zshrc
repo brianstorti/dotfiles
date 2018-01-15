@@ -36,6 +36,7 @@ export LC_ALL=en_US.UTF-8
 alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
 alias gbrian="open -a Google\ Chrome 'http://github.com/brianstorti'"
 
+alias k="kubectl"
 alias ez="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
@@ -99,6 +100,14 @@ alias redis_start="redis-server /usr/local/etc/redis.conf"
 
 # memcache
 alias memcache_start="/usr/local/opt/memcached/bin/memcached"
+
+remove_all_containers() {
+  docker container rm -f $(docker container ps -a -q)
+}
+
+remove_all_images() {
+  docker image rm -f $(docker images -a -q)
+}
 
 man() {
   PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@
@@ -201,6 +210,13 @@ dash() {
 
 loop() {
   while [ true ]; do; $@; done;
+}
+
+replace_all() {
+  source=$1
+  target=$2
+
+  ag "$source" -l | xargs sed -i '' -e "s/$source/$target/g"
 }
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
