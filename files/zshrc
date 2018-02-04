@@ -1,66 +1,102 @@
-# Fix to use tmux, rvm and zsh
-if [ -x /usr/libexec/path_helper ]
-then
-  eval `/usr/libexec/path_helper -s`
-fi
+#################
+#    INIT
+#################
 
-# docker autocompletion
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit -i
 
-plugins=(docker)
-export TERM=screen-256color-bce
-export GOPATH=$HOME/go
 export PATH="./bin/:$PATH"
 export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:/usr/local/sbin/google-cloud-sdk/bin"
-export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 
-export ZSH=$HOME/.oh-my-zsh
-[ -e $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-source ~/.prose.zsh-theme
+[ -f '/usr/local/sbin/google-cloud-sdk/path.zsh.inc' ] && source '/usr/local/sbin/google-cloud-sdk/path.zsh.inc'
+[ -f '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc' ] && source '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc'
+
+export EDITOR="vim"
+export TERM=screen-256color-bce
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export CLICOLOR=1
+export GOPATH=$HOME/go
+
+# support colors in less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# use emacs-style bindings
+bindkey -e
 
 # Use ^U to delete everything to the left
 bindkey '^U' backward-kill-line
 
 unsetopt correct_all
 
-export EDITOR="vim"
+[ -e ~/.zshrc-private ] && source ~/.zshrc-private
+[ -e ~/.z.sh ] && source ~/.z.sh
+[ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -e ~/.svnhelpers ] && source ~/.svnhelpers
 
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+eval "$(direnv hook zsh)"
 
-alias brian="open -a Google\ Chrome 'https://www.google.com.br/#q=brian+thomas+storti'"
-alias gbrian="open -a Google\ Chrome 'http://github.com/brianstorti'"
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+
+# =============
+#    HISTORY
+# =============
+
+## Command history configuration
+if [ -z "$HISTFILE" ]; then
+  HISTFILE=$HOME/.zsh_history
+fi
+
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+# ignore duplication command history list
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+# share command history data
+setopt share_history
+
+
+# =============
+#    ALIAS
+# =============
 
 alias k="kubectl"
 alias ez="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
 alias reload="exec $SHELL --login"
-alias e="exit"
-alias :q="exit"
 alias r="bin/rails"
 alias t="bin/rails test"
-alias va="vagrant"
 alias be="bundle exec"
-alias eh="sudo vim /etc/hosts"
 alias l="ls -lha"
-alias lr="lein run"
 alias todo="vim ~/Dropbox/.todo"
-alias imix="iex -S mix"
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
 alias reset_rabbit="rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
 alias ss="spring stop"
-alias h="heroku"
 alias htop="sudo htop"
 alias mux="tmuxinator"
 alias ux="mux"
+alias ..="cd .."
 
 # git
 alias g="git"
@@ -69,58 +105,30 @@ alias gb="g branch"
 alias gs="g status"
 alias gl="g l -30"
 alias glm="g l --author=Brian"
-alias gl1="g l1"
-alias gk="gk &"
 alias gc="g commit --verbose"
 alias gch="g checkout"
 alias gp="g push -u"
 alias gpp="gp && gpr"
 alias gd="g diff --no-prefix"
-alias gr="g reflog"
 alias gdc="g diff --cached --no-prefix"
-alias gt="g tag"
-alias gm="g merge"
 alias gpr="hub pull-request -o"
 
+
+# ======================
+#    UTILITY FUNCTIONS
+# ======================
+
 # Use fzy to select branch to checkout
-function b() {
-  git checkout `git branch | fzy`
-}
+b() { git checkout `git branch | fzy` }
 
-# pg
-alias pg_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
-alias pg_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+remove_all_containers() { docker container rm -f $(docker container ps -a -q) }
 
-# mysql
-alias mysql_start="mysql.server start"
-alias mysql_stop="mysql.server stop"
+remove_all_images() { docker image rm -f $(docker images -a -q) }
 
-# redis
-alias redis_start="redis-server /usr/local/etc/redis.conf"
+man() { PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@ }
 
-# memcache
-alias memcache_start="/usr/local/opt/memcached/bin/memcached"
-
-remove_all_containers() {
-  docker container rm -f $(docker container ps -a -q)
-}
-
-remove_all_images() {
-  docker image rm -f $(docker images -a -q)
-}
-
-man() {
-  PAGER="/bin/sh -c \"col -b | vim -R -c 'set ft=man' -\"" command man $@
-}
-
-cale() {
-  year=$(date | awk '{print $6}')
-  cal $1 $year
-}
-
-showp() {
-  lsof -i tcp:$1
-}
+# show processes running on a given port
+showp() { lsof -i tcp:$1 }
 
 # kills every process running on a given port
 killp() {
@@ -149,22 +157,9 @@ s() {
   fi
 }
 
-hr() {
-  line=$(printf "%-`tput cols`s" "*");
-  echo ${line// /*};
-}
-
-ff() {
-  find_type "f" $@
-}
-
-fl() {
-  find_type "l" $@
-}
-
-fd() {
-  find_type "d" $@
-}
+ff() { find_type "f" $@ }
+fl() { find_type "l" $@ }
+fd() { find_type "d" $@ }
 
 find_type() {
   search_type=$1
@@ -173,64 +168,36 @@ find_type() {
   find . -type $search_type -iname "*$name*" $@
 }
 
-pa() {
-  ps aux | ag -i $1
+pa() { ps aux | ag -i $1 }
+
+ip() { ifconfig -a | grep inet | grep broadcast | awk '{ print $2 }' }
+
+size() { du -sh $@ }
+
+loop() { while [ true ]; do; $@; done; }
+
+# replace_all foo bar
+# find "foo" in every file and replace it with "bar"
+replace_all() { ag "$1" -l | xargs sed -i '' -e "s/$1/$2/g" }
+
+# kill all suspended jobs
+kj() { for id in $(jobs -p | grep "\[\d\]" -o | grep "\d" -o); do disown %$id 2>/dev/null; done }
+
+# =============
+#    PROMPT
+# =============
+
+autoload -U colors && colors
+setopt promptsubst
+
+git_prompt_info () {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
-java6() {
-  export JAVA_HOME="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
-}
+PROMPT='
+%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info)
+$ '
 
-java7() {
-  export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home"
-}
-
-java8() {
-  export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home"
-}
-
-remote_debug_gradle() {
-  port=${1-8080}
-  export GRADLE_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=$port,server=y,suspend=n"
-}
-
-ip() {
-  ifconfig -a | grep inet | grep broadcast | awk '{ print $2 }'
-}
-
-size() {
-  du -sh $@
-}
-
-dash() {
-  docset=$1
-  query=$2
-  open dash://$docset:$query
-}
-
-loop() {
-  while [ true ]; do; $@; done;
-}
-
-replace_all() {
-  source=$1
-  target=$2
-
-  ag "$source" -l | xargs sed -i '' -e "s/$source/$target/g"
-}
-
-[ -e ~/.zshrc-private ] && source ~/.zshrc-private
-[ -e ~/.z.sh ] && source ~/.z.sh
-[ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -e ~/.svnhelpers ] && source ~/.svnhelpers
-
-eval "$(direnv hook zsh)"
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/sbin/google-cloud-sdk/path.zsh.inc' ]; then source '/usr/local/sbin/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc' ]; then source '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc'; fi
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[black]%} ("
+ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"
