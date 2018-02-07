@@ -201,3 +201,41 @@ $ '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[black]%} ("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"
+
+
+# ===================
+#    AUTOCOMPLETION
+# ===================
+
+# enable completion
+autoload -Uz compinit
+compinit
+
+zmodload -i zsh/complist
+
+WORDCHARS=''
+
+unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt flowcontrol
+setopt auto_menu         # show completion menu on successive tab press
+setopt complete_in_word
+setopt always_to_end
+
+# autocompletion with an arrow-key driven interface
+zstyle ':completion:*:*:*:*:*' menu select
+
+# case-insentive autocompletion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+
+# use different colors for directories and files
+zstyle ':completion:*' list-colors ''
+
+# format autocompletion for `kill -9 {string}`
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+
+# Automatically update PATH entries
+zstyle ':completion:*' rehash true
+
+# Keep directories and files separated
+zstyle ':completion:*' list-dirs-first true
