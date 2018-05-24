@@ -6,6 +6,8 @@
   branch = auto
   interactive = auto
   diff = auto
+[log]
+  date = relative
 [alias]
   l = "!source ~/.githelpers && pretty_git_log"
   co = "checkout"
