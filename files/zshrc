@@ -6,7 +6,7 @@ fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit -i
 
 export PATH="./bin/:$PATH"
-export PATH="/usr/local/heroku/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:/usr/local/sbin/google-cloud-sdk/bin"
@@ -38,6 +38,7 @@ bindkey -e
 bindkey '^U' backward-kill-line
 
 unsetopt correct_all
+setopt auto_cd
 
 [ -e ~/.zshrc-private ] && source ~/.zshrc-private
 [ -e ~/.z.sh ] && source ~/.z.sh
@@ -92,19 +93,21 @@ alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resour
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
 alias reset_rabbit="rabbitmqctl stop_app && rabbitmqctl reset && rabbitmqctl start_app"
+alias reset_rabbit_docker="docker start rabbitmq && docker exec rabbitmq bash -c 'rabbitmqctl stop_app && rabbitmqctl reset' && docker restart rabbitmq"
 alias ss="spring stop"
 alias htop="sudo htop"
 alias mux="tmuxinator"
 alias ux="mux"
-alias ..="cd .."
+alias format_json="python -m json.tool"
+alias dc="docker-compose"
 
 # git
 alias g="git"
 alias ga="g add -A"
 alias gb="g branch"
 alias gs="g status"
-alias gl="g l -30"
-alias glm="g l --author=Brian"
+alias gl="git log --pretty=format:'%C(yellow)%h %Cblue%>(12)%ad %Cgreen%<(20)%aN%Cred%d %Creset%s'"
+alias glm="gl --author=Brian"
 alias gc="g commit --verbose"
 alias gch="g checkout"
 alias gp="g push -u"
@@ -117,6 +120,8 @@ alias gpr="hub pull-request -o"
 # ======================
 #    UTILITY FUNCTIONS
 # ======================
+
+list_sizes() { for file in *; do; du -sh "$file"; done }
 
 # Use fzy to select branch to checkout
 b() { git checkout `git branch | fzy` }
@@ -152,8 +157,8 @@ s() {
     echo "mix phoenix.server $@"
     mix phoenix.server $@
   else
-    echo "rails server -b 0.0.0.0 $@"
-    rails server -b 0.0.0.0 $@
+    echo "rails server -b 0.0.0.0 $@ | timing"
+    rails server -b 0.0.0.0 2>&1 $@ | timing
   fi
 }
 
@@ -182,6 +187,16 @@ replace_all() { ag "$1" -l | xargs sed -i '' -e "s/$1/$2/g" }
 
 # kill all suspended jobs
 kj() { for id in $(jobs -p | grep "\[\d\]" -o | grep "\d" -o); do disown %$id 2>/dev/null; done }
+
+# Lazy load kubectl autocomplete
+kubectl() {
+  if [[ -z $KUBECTL_AUTOCOMPLETION_LOADED ]]; then
+      KUBECTL_AUTOCOMPLETION_LOADED=1
+      source <(kubectl completion zsh)
+  fi
+
+  command kubectl $@
+}
 
 # =============
 #    PROMPT
@@ -239,3 +254,8 @@ zstyle ':completion:*' rehash true
 
 # Keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
+
+# Edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '\C-x\C-e' edit-command-line
