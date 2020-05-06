@@ -237,6 +237,10 @@ h() {
   eval $cmd
 }
 
+kc() {
+  kubectl config use-context $(kubectl config get-contexts --output name | fzy)
+}
+
 # =============
 #    PROMPT
 # =============
