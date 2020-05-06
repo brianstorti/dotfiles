@@ -5,11 +5,10 @@
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit -i
 
-export PATH="./bin/:$PATH"
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
 export PATH="$PATH:$GOPATH/bin"
-export PATH="$PATH:/usr/local/sbin/google-cloud-sdk/bin"
+export PATH="$PATH:$HOME/.linkerd2/bin"
 
 [ -f '/usr/local/sbin/google-cloud-sdk/path.zsh.inc' ] && source '/usr/local/sbin/google-cloud-sdk/path.zsh.inc'
 [ -f '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc' ] && source '/usr/local/sbin/google-cloud-sdk/completion.zsh.inc'
@@ -31,6 +30,8 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+export PGCONNECT_TIMEOUT=5
+
 # use emacs-style bindings
 bindkey -e
 
@@ -48,7 +49,6 @@ setopt auto_cd
 eval "$(direnv hook zsh)"
 
 . $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
 
 
 # =============
@@ -80,6 +80,12 @@ setopt share_history
 # =============
 
 alias k="kubectl"
+alias ka="kubectl apply -f"
+alias stag="kubectl config use-context staging"
+alias prod="kubectl config use-context production"
+alias spinn="kubectl config use-context spinnaker"
+alias kip="kubectl config use-context docker-for-desktop"
+alias empty_char="echo -e \"\u200f\" | pbcopy"
 alias ez="vim ~/.zshrc"
 alias v="vim ~/.vim/vimrc"
 alias vi="vim"
@@ -89,6 +95,7 @@ alias t="bin/rails test"
 alias be="bundle exec"
 alias l="ls -lha"
 alias todo="vim ~/Dropbox/.todo"
+alias as="vim ~/Dropbox/.alphasights-todo"
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias nombom='npm cache clear && bower cache clean && rm -rf node_modules bower_components && npm install && bower install'
 alias remove_merged="git branch --merged | grep -v \"\*\" | grep -v master | xargs git branch -d"
@@ -100,6 +107,15 @@ alias mux="tmuxinator"
 alias ux="mux"
 alias format_json="python -m json.tool"
 alias dc="docker-compose"
+alias watch='watch ' # this makes `watch` work with other aliases, like `watch l`
+alias flush_dns="sudo killall -HUP mDNSResponder"
+alias w="watch"
+alias klogs="kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{\"\n\"}}{{end}}' | fzy | xargs kubectl logs -f --tail 50"
+alias kcc="kubectl config current-context"
+alias kgc="kubectl config get-contexts"
+alias kutil='kubectl get nodes --no-headers | awk '\''{print $1}'\'' | xargs -I {} sh -c '\''echo {} ; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo '\'''
+alias test_iops="dd if=/dev/zero of=test.dat bs=1024 count=100000"
+alias ecr_login="aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 579859358947.dkr.ecr.us-east-1.amazonaws.com"
 
 # git
 alias g="git"
@@ -120,6 +136,23 @@ alias gpr="hub pull-request -o"
 # ======================
 #    UTILITY FUNCTIONS
 # ======================
+
+kexec() {
+  kubectl exec -it $(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | fzy) -- sh
+}
+
+kuc() {
+  kubectl config use-context $1
+}
+
+restart_all_deployments() {
+  kubectl get deployments --no-headers | awk '{print $1}' | xargs kubectl rollout restart deployment
+}
+
+delete_all_completed_jobs() {
+  ns=${1:-default}
+  kubectl -n $ns delete job $(kubectl -n $ns get job -o=jsonpath='{.items[?(@.status.succeeded==1)].metadata.name}')
+}
 
 list_sizes() { for file in *; do; du -sh "$file"; done }
 
@@ -198,6 +231,12 @@ kubectl() {
   command kubectl $@
 }
 
+h() {
+  local cmd=$(tail -r ~/.zsh_history | fzy | cut -d ";" -f 2)
+  echo $cmd
+  eval $cmd
+}
+
 # =============
 #    PROMPT
 # =============
@@ -210,8 +249,15 @@ git_prompt_info () {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
+kube_context() {
+  context=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
+  if [[ -n $context ]]; then
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX$context$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  fi
+}
+
 PROMPT='
-%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info)
+%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info)$(kube_context)
 $ '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[black]%} ("
